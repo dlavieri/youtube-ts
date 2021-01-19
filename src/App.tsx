@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { YT_API_KEY } from './.env.js';
 import './App.css';
-
-const API_KEY = "";
 
 const App: React.FC = () => {
   const [ apiConnected, setApiConnected ] = useState<boolean>(false);
@@ -12,13 +11,18 @@ const App: React.FC = () => {
 
     script.onload = () => {
       window.gapi.load('client', () => {
-        window.gapi.client.setApiKey(API_KEY);
+        window.gapi.client.setApiKey(YT_API_KEY);
         window.gapi.client.load('youtube', 'v3', () => {
           setApiConnected(true);
         })
       })
     }
   }
+
+  useEffect(() => {
+    loadYoutubeApi();
+  },[])
+
 
   return (
     <div className="App">
